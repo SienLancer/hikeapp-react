@@ -1,0 +1,24 @@
+# nodejs.yml
+name: Node.js CI
+
+on:
+  push:
+    branches:
+      - feature/** # Trigger the build on commits to any feature branch
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Merge to Dev
+        uses: "peter-evans/create-pull-request@v5"
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          branch: feature/login
+          title: "Merge feature branch to dev"
+          body: "Automatically merging feature branch to dev"
+          labels: "auto-merge"
